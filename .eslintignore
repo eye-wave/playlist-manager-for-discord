@@ -1,0 +1,12 @@
+dist/
+node_modules/
+download/
+
+.env
+.env.example
+
+.gitignore
+
+*.json
+*.lock
+*.md

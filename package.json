@@ -1,0 +1,42 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "NODE_ENV=production rollup -c",
+    "mini": "find ./dist -type f -name '*.js' | xargs -I{} uglifyjs -cmo {} --verbose --module -- {}",
+    "dev": "rollup -wc",
+    "lint": "eslint . --fix",
+    "start": "NODE_OPTIONS=--enable-source-maps node ./dist/main.js"
+  },
+  "bin": {
+    "discord-cli": ".bin/discord-cli.js"
+  },
+  "type": "module",
+  "devDependencies": {
+    "@rollup/plugin-node-resolve": "^15.0.2",
+    "@rollup/plugin-terser": "0.4.1",
+    "@rollup/plugin-typescript": "^11.1.0",
+    "@types/d3-dsv": "^3.0.1",
+    "@types/fold-to-ascii": "^5.0.0",
+    "@typescript-eslint/eslint-plugin": "^5.59.0",
+    "@typescript-eslint/parser": "^5.59.0",
+    "eslint": "^8.38.0",
+    "nodemon": "*",
+    "npm-check-updates": "*",
+    "rollup": "^3.20.6",
+    "tslib": "^2.5.0",
+    "typescript": "^5.0.4",
+    "uglify-js": "^3.17.4"
+  },
+  "dependencies": {
+    "csv-parser": "^3.0.0",
+    "d3-dsv": "^3.0.1",
+    "discord.js": "^14.9.0",
+    "dotenv": "^16.0.3",
+    "fold-to-ascii": "^5.0.1",
+    "googleapis": "^118.0.0",
+    "open": "^9.1.0"
+  },
+  "main": "./dist/main.js",
+  "license": "MIT"
+}

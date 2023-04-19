@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "strict": true, 
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "Node",   
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": ".",
+    "emitDecoratorMetadata": true,
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "outDir": "./dist",
+    "paths": {
+      "src/*": ["./src/*"],
+      "src": ["./src"]
+    },
+    "resolveJsonModule": true,
+    "rootDir": "./src",
+    "sourceMap": true,
+    "strictNullChecks": true,
+    "typeRoots": ["./src/**/*.d.ts"],
+    "types": ["node"]
+  },
+  "include": ["**/*.ts"],
+}
