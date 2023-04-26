@@ -22,8 +22,7 @@
     "rootDir": "./src",
     "sourceMap": true,
     "strictNullChecks": true,
-    "typeRoots": ["./src/**/*.d.ts"],
-    "types": ["node"]
+    "typeRoots": ["./src/**/*.d.ts"]
   },
   "include": ["**/*.ts"],
 }

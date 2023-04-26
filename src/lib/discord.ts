@@ -1,6 +1,8 @@
 import "dotenv/config"
 import { Client, GatewayIntentBits, SnowflakeUtil, type TextChannel } from "discord.js"
 
+export const discordLaunchDate =1431468000000
+
 export function useBot<T>(
   callback:((client:Client,channel:TextChannel) => Promise<T>),
   intents =[

@@ -13,7 +13,7 @@ export async function loadCsv( filePath: string ) {
     const stream =fs.createReadStream(filePath)
     
     stream
-      .pipe(csvParser())
+      .pipe(csvParser({ mapValues: ({ header,value }) => header === "date" ? +value : value }))
       .on("data",data => result.push(data))
       .on("end",() => resolve(result))
   })

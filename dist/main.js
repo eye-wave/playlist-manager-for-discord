@@ -1,0 +1,1 @@
+import{syncSongs as o}from"./index.js";import{g as i}from"./songs-77a8e17e.js";import"dotenv/config";import"googleapis";import"node:http";import"node:url";import"open";import"discord.js";import"csv-parser";import"d3-dsv";import"node:fs";import"node:path";import"node:child_process";o(parseInt(i("--limit","-l"))||void 0);

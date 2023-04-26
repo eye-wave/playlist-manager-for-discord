@@ -25,7 +25,7 @@ export async function syncSongs( messageLimit =100 ) {
 
   await getNewSongs( messageLimit )
   
-  if ( songsStore.newSongsCount > 0  && !argsInclude("--local","-l") ) {
+  if ( songsStore.newSongsCount > 0  && !argsInclude("--offline","-o") ) {
     const authClient =await getGoogleAuthToken()
     const botId =await getBotId()
     
@@ -57,22 +57,22 @@ export async function syncSongs( messageLimit =100 ) {
     saveCsv("./download/download.csv",songsStore.allSongs),
     saveCsv("./download/download_other.csv",otherSongsStore.allSongs),
     saveCsv("./download/users.csv",userStore.users),
-    saveCsv(`./download/${songFile}`,songsStore.allSongs.concat(otherSongsStore.allSongs).map(song => {
-        
-      return {
-        author: userStore.users.filter(user => user.id === song.authorId )?.[0]?.name || "",
-        title:song.title,
-        url:song.url
-      }
-    })
+    saveCsv(`./download/${songFile}`,songsStore.allSongs.concat(otherSongsStore.allSongs)
+      .map(song => {
+        return {
+          author: userStore.getUser( song.authorId )?.name || null,
+          title: song.title,
+          url: song.url
+        }
+      })
       .sort((a,b) => 
-        a.author.localeCompare(b.author) ||
+        a.author?.localeCompare(b?.author || "") ||
         a.title.localeCompare(b.title) ||
         a.url.localeCompare(b.url)
       )
     )
   ])
 
-  if ( argsInclude("--gist") ) await commitChanges()
+  if ( argsInclude("--gist") ) await commitChanges(songFile)
 }
 

@@ -7,23 +7,28 @@ export type User ={
   color: string
 }
 
-function createUserStore() {
+export function createUserStore() {
   const ids =new Set<string>()
-  const users:User[] =[]
+  const users =new Map<string,User>()
 
   return {
-    get allFetched() { return users.length === ids.size },
-    get users() { return [...users] },
+    get allFetched() { return users.  size === ids.size },
+    get users() { return [...users.values()] },
     
+    getUser ( id: string ) {
+      return users.get( id )
+    },
+
     add( id:string ) {
       ids.add(id)
       return this
     },
+
     addFromCache( user:User ) {
       if ( ids.has(user.id ) ) return this
       
       this.add(user.id)
-      users.push(user)
+      users.set( user.id, user)
 
       return this
     },
@@ -37,7 +42,7 @@ function createUserStore() {
           const { id, displayName:name, displayHexColor:color } =member
           const avatarUrl =member.displayAvatarURL()
 
-          users.push({ id, color, name, avatarUrl })
+          users.set(id,{ id, color, name, avatarUrl })
         })})
     }
   }

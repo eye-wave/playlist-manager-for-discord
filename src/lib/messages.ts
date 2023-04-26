@@ -51,7 +51,7 @@ export async function getNewSongs(trueLimit =100,before?:string):Promise<[ numbe
             })
           })
         
-        message.content.match(/https:\/\/(?:www|open)?\.?(?:spotify|youtube|soundcloud)\.com\/(?!watch).*/g)
+        message.content.match(/https:\/\/(?:www|open)?\.?(?:spotify|soundcloud)\.com\/.*/g)
           ?.map(songUrl => {
             if ( otherSongsStore.has(songUrl) ) return
             const [ embed ] =message.embeds.filter(embed => embed.url === songUrl)
