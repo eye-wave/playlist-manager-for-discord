@@ -1,8 +1,8 @@
 import { scaleLinear, scaleUtc } from "d3-scale"
 import { curveBumpX as curve, line } from "d3-shape"
 import fs from "node:fs"
+import { avatarStore } from "../lib/stores/avatars"
 import { SongsByUserAndTime } from "./lib/songsByUser"
-import { avatarStore } from "./lib/stores/avatars"
 import { createNode, createSvgNode } from "./lib/svg"
 
 export async function createTimeGraph(input: SongsByUserAndTime[]) {
@@ -27,11 +27,11 @@ export async function createTimeGraph(input: SongsByUserAndTime[]) {
     .y(d => y(d.value))
     .curve(curve)
 
-  const svg = createSvgNode(width, height).setAttribute("font-size", 10)
-  const bg = createNode("rect").setPosition({ width, height }).setAttribute("fill", "#222").appendTo(svg)
+  const svg = createSvgNode(width, height).setAttr("font-size", 10)
+  const bg = createNode("rect").setPosition({ width, height }).setAttr("fill", "#222").appendTo(svg)
   const style = createNode("style")
   style
-    .setTextContent(
+    .setText(
       input
         .map(({ user }, i) => `.u-${user.id}{animation:h ${input.length * 4}s linear ${(i - 1) * 4}s infinite;opacity:0}`)
         .join("") +
@@ -62,12 +62,12 @@ export async function createTimeGraph(input: SongsByUserAndTime[]) {
 
     const text = formater.format(item.timestamp)
 
-    xAxis.appendChild(
+    xAxis.append(
       createNode("text")
         .setPosition({ x, y })
-        .setAttribute("transform", `rotate(90 ${x} ${y})`)
-        .setAttribute("fill", "#fff")
-        .setTextContent(text + (isJan ? " " + year : "")),
+        .setAttr("transform", `rotate(90 ${x} ${y})`)
+        .setAttr("fill", "#fff")
+        .setText(text + (isJan ? " " + year : "")),
     )
   })
 
@@ -79,7 +79,7 @@ export async function createTimeGraph(input: SongsByUserAndTime[]) {
     const x = margin.left - 10
     const y = height - margin.bottom - ((height - margin.top - margin.bottom) / maxValue) * i
 
-    yAxis.appendChild(createNode("text").setPosition({ x, y }).setAttribute("fill", "#fff").setTextContent(i))
+    yAxis.append(createNode("text").setPosition({ x, y }).setAttr("fill", "#fff").setText(i))
   }
 
   // Graph + images
@@ -91,7 +91,7 @@ export async function createTimeGraph(input: SongsByUserAndTime[]) {
     const imageSize = 52
     const image = await avatarStore.get(user.id, imageSize, imageSize)
     createNode("image")
-      .setAttribute("xlink:href", image)
+      .setAttr("xlink:href", image)
       .setPosition({
         x: margin.left + 20,
         y: margin.top + 20,
@@ -100,12 +100,12 @@ export async function createTimeGraph(input: SongsByUserAndTime[]) {
       })
       .appendTo(group)
 
-    group.setAttribute("class", "u-" + user.id)
+    group.setAttr("class", "u-" + user.id)
     createNode("path")
-      .setAttribute("d", lineGenerator([{ timestamp: minTime, value: 0 }, ...list, { timestamp: maxTime, value: 0 }]) || "")
-      .setAttribute("stroke-width", 1)
-      .setAttribute("stroke", user?.color || "red")
-      .setAttribute("fill", (user?.color || "#ff0000") + "40")
+      .setAttr("d", lineGenerator([{ timestamp: minTime, value: 0 }, ...list, { timestamp: maxTime, value: 0 }]) || "")
+      .setAttr("stroke-width", 1)
+      .setAttr("stroke", user?.color || "red")
+      .setAttr("fill", (user?.color || "#ff0000") + "40")
       .appendTo(group)
 
     createNode("text")
@@ -113,35 +113,35 @@ export async function createTimeGraph(input: SongsByUserAndTime[]) {
         x: margin.left + 25 + imageSize,
         y: margin.top + 20 + imageSize / 2,
       })
-      .setAttribute("font-size", 20)
-      .setAttribute("fill", user.color || "red")
-      .setTextContent(user.name)
+      .setAttr("font-size", 20)
+      .setAttr("fill", user.color || "red")
+      .setText(user.name)
       .appendTo(group)
 
     const privateSvg = createSvgNode(width, height)
-      .setAttribute("font-size", 10)
-      .appendChild(bg)
-      .appendChild(group)
-      .appendChild(xAxis)
-      .appendChild(yAxis)
+      .setAttr("font-size", 10)
+      .append(bg)
+      .append(group)
+      .append(xAxis)
+      .append(yAxis)
 
     const scatterPlot = createNode("g").appendTo(privateSvg)
     const avg = list.reduce((acc, i) => acc + i.value, 0) / list.length
 
     list.forEach(item => {
       createNode("circle")
-        .setAttribute("cx", x(item.timestamp))
-        .setAttribute("cy", y(item.value))
-        .setAttribute("r", 2)
-        .setAttribute("fill", "#fff")
+        .setAttr("cx", x(item.timestamp))
+        .setAttr("cy", y(item.value))
+        .setAttr("r", 2)
+        .setAttr("fill", "#fff")
         .appendTo(scatterPlot)
 
       if (item.value > avg) {
         createNode("text")
-          .setAttribute("x", x(item.timestamp) - 5)
-          .setAttribute("y", y(item.value) - 6)
-          .setAttribute("fill", "#fff")
-          .setTextContent(item.value)
+          .setAttr("x", x(item.timestamp) - 5)
+          .setAttr("y", y(item.value) - 6)
+          .setAttr("fill", "#fff")
+          .setText(item.value)
           .appendTo(scatterPlot)
       }
     })

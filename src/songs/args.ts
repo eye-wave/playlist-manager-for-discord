@@ -6,7 +6,7 @@ export function argsInclude<T extends string>(flag: `--${T}`, shortFlag?: `-${T}
   return false
 }
 
-export function getValueFromArgs<T extends string>(flag: `--${T}`, shortFlag?: `-${T}`): unknown {
+export function getValueFromArgs<T extends string>(flag: `--${T}`, shortFlag?: `-${T}`) {
   const [, , ...flags] = process.argv
 
   if (flags.includes(flag)) {

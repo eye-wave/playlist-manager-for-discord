@@ -2,7 +2,7 @@ import csvParser from "csv-parser"
 import { csvFormat } from "d3-dsv"
 import fs from "node:fs"
 import path from "node:path"
-import type { SongEntry } from "./stores/songs"
+import type { SongEntry } from "src/lib/stores/songs"
 
 export async function loadCsv(filePath: string) {
   return new Promise<SongEntry[]>(resolve => {

@@ -1,5 +1,5 @@
-import type { SongEntry } from "./stores/songs"
-import { userStore, type User } from "./stores/users"
+import type { SongEntry } from "src/lib/stores/songs"
+import { userStore, type User } from "src/lib/stores/users"
 
 export type SongEntryWithUser = { author: User | null } & Omit<SongEntry, "authorId">
 

@@ -1,12 +1,12 @@
 export type Node = {
-  readonly childNodes: Node[]
-  readonly attributes: Map<string, string>
-  readonly name: string
-  readonly textContent: string
-  parentNode: Node | null
-  setTextContent(input: string | number): Node
-  setAttribute(key: string, value: string | number): Node
-  appendChild(node: Node): Node
+  // readonly childNodes: Node[]
+  // readonly name: string
+  // readonly text: string
+  readonly attrs: Map<string, string>
+  parent: Node | null
+  setText(input: string | number): Node
+  setAttr(key: string, value: string | number): Node
+  append(node: Node): Node
   appendTo(node: Node): Node
   setPosition(input: { width?: number; height?: number; x?: number; y?: number }): Node
 
@@ -20,60 +20,60 @@ export function createNode(name: string): Node {
   let textContent: string | undefined = undefined
 
   return {
-    get name() {
-      return name
-    },
-    get childNodes() {
-      return childNodes
-    },
-    get attributes() {
+    // get name() {
+    //   return name
+    // },
+    // get childNodes() {
+    //   return childNodes
+    // },
+    get attrs() {
       return attributes
     },
 
-    set parentNode(node) {
+    set parent(node) {
       parentNode = node
     },
-    get parentNode() {
+    get parent() {
       return parentNode
     },
 
-    get textContent() {
-      return textContent || ""
-    },
-    setTextContent(input: string | number) {
+    // get text() {
+    //   return textContent || ""
+    // },
+    setText(input: string | number) {
       textContent = `${input}`
       return this
     },
 
-    setAttribute(key: string, value: string | number) {
+    setAttr(key: string, value: string | number) {
       attributes.set(key, `${value}`)
       return this
     },
 
     setPosition({ x, y, width, height }) {
-      x !== undefined && this.setAttribute("x", x)
-      y !== undefined && this.setAttribute("y", y)
-      width !== undefined && this.setAttribute("width", width)
-      height !== undefined && this.setAttribute("height", height)
+      x !== undefined && this.setAttr("x", x)
+      y !== undefined && this.setAttr("y", y)
+      width !== undefined && this.setAttr("width", width)
+      height !== undefined && this.setAttr("height", height)
       return this
     },
 
-    appendChild(node) {
+    append(node) {
       childNodes.push(node)
-      node.parentNode = this
+      node.parent = this
       return this
     },
 
     appendTo(node) {
-      node.appendChild(this)
+      node.append(this)
       return this
     },
 
     render() {
-      const attributesRender = Array.from(this.attributes.entries())
+      const attributesRender = Array.from(this.attrs.entries())
         .map(([key, value]) => `${key}="${value}"`)
         .join(" ")
-      const hasAttributes = this.attributes.size > 0
+      const hasAttributes = this.attrs.size > 0
 
       const childNodesRender = childNodes.map(node => node.render()).join("")
       return `<${name}${hasAttributes ? " " : ""}${attributesRender}>${childNodesRender}${textContent || ""}</${name}>`
@@ -84,10 +84,10 @@ export function createNode(name: string): Node {
 export function createSvgNode(width: number, height: number) {
   const node = createNode("svg")
     .setPosition({ width, height })
-    .setAttribute("viewbox", `0 0 ${width} ${height}`)
-    .setAttribute("xmlns", "http://www.w3.org/2000/svg")
-    .setAttribute("xmlns:xlink", "http://www.w3.org/1999/xlink")
-    .setAttribute("fill", "none")
+    .setAttr("viewbox", `0 0 ${width} ${height}`)
+    .setAttr("xmlns", "http://www.w3.org/2000/svg")
+    .setAttr("xmlns:xlink", "http://www.w3.org/1999/xlink")
+    .setAttr("fill", "none")
 
   const defs = createNode("defs")
 

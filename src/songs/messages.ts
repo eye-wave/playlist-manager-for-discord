@@ -1,8 +1,8 @@
 import { Collection, SnowflakeUtil } from "discord.js"
+import { otherSongsStore, songsStore } from "src/lib/stores/songs"
+import { userStore } from "src/lib/stores/users"
+import { getDateFromMessageId, useBot } from "../lib/discord"
 import { colReset, colYellow } from "./colors"
-import { getDateFromMessageId, useBot } from "./discord"
-import { otherSongsStore, songsStore } from "./stores/songs"
-import { userStore } from "./stores/users"
 
 export async function getNewSongs(trueLimit = 100, before?: string): Promise<[number, number]> {
   if (trueLimit < 1) return [0, 0]

@@ -5,8 +5,8 @@ import { google, type youtube_v3 } from "googleapis"
 import http from "node:http"
 import url from "node:url"
 import open from "open"
+import type { SongEntry } from "src/lib/stores/songs"
 import { listDuplicates } from "./duplicates"
-import type { SongEntry } from "./stores/songs"
 
 export type ShortSongEntry = {
   id: string

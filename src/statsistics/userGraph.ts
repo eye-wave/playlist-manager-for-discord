@@ -1,8 +1,8 @@
 import { arc, pie } from "d3-shape"
 import fs from "node:fs"
+import { avatarStore } from "../lib/stores/avatars"
 import { pallete1 as colors } from "./lib/colors"
 import { UserWithCount } from "./lib/songsByUser"
-import { avatarStore } from "./lib/stores/avatars"
 import { createNode, createSvgNode } from "./lib/svg"
 
 export async function createUserChart(input: UserWithCount[]) {
@@ -12,11 +12,11 @@ export async function createUserChart(input: UserWithCount[]) {
   const radius = (height - margin.top - margin.bottom) / 2
 
   const svg = createSvgNode(width, height)
-    .setAttribute("font-size", 10)
-    .appendChild(createNode("rect").setPosition({ width, height }).setAttribute("fill", "#222"))
+    .setAttr("font-size", 10)
+    .append(createNode("rect").setPosition({ width, height }).setAttr("fill", "#222"))
 
   const circleGroup = createNode("g")
-    .setAttribute("transform", `translate(${radius + margin.left},${radius + margin.top})`)
+    .setAttr("transform", `translate(${radius + margin.left},${radius + margin.top})`)
     .appendTo(svg)
 
   const formattedData = pie<UserWithCount>().value(d => d.count)(input)
@@ -30,8 +30,8 @@ export async function createUserChart(input: UserWithCount[]) {
         createNode("path")
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           //@ts-ignore
-          .setAttribute("d", arcGenerator(formattedData[i]))
-          .setAttribute("fill", colors[i])
+          .setAttr("d", arcGenerator(formattedData[i]))
+          .setAttr("fill", colors[i])
           .appendTo(circleGroup)
 
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -48,7 +48,7 @@ export async function createUserChart(input: UserWithCount[]) {
           .get(user!.id, 32, 32)
           .then(image => {
             createNode("image")
-              .setAttribute("xlink:href", image)
+              .setAttr("xlink:href", image)
               .setPosition({
                 x: x2 + 32,
                 y: y2 + 5,
@@ -60,14 +60,14 @@ export async function createUserChart(input: UserWithCount[]) {
           .then(resolve)
 
         createNode("path")
-          .setAttribute("d", `M${x1} ${y1}l0 -10L${x2} ${y2}l20 0`)
-          .setAttribute("stroke", user?.color || "red")
+          .setAttr("d", `M${x1} ${y1}l0 -10L${x2} ${y2}l20 0`)
+          .setAttr("stroke", user?.color || "red")
           .appendTo(svg)
 
         createNode("text")
-          .setTextContent(`${user?.name} ${Math.floor((count / sum) * 1000) / 10}% (${count})`)
+          .setText(`${user?.name} ${Math.floor((count / sum) * 1000) / 10}% (${count})`)
           .setPosition({ x: x2 + 30, y: y2 })
-          .setAttribute("fill", user?.color || "red")
+          .setAttr("fill", user?.color || "red")
           .appendTo(svg)
       }),
   )
