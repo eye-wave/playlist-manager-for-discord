@@ -13,6 +13,9 @@ pnpm-debug.log*
 # macOS-specific files
 .DS_Store
 
+# build
+dist/
+
 # private files
 download/
 *.csv

@@ -4,30 +4,28 @@ import fs from "node:fs"
 import path from "node:path"
 import type { SongEntry } from "./stores/songs"
 
-export async function loadCsv( filePath: string ) {
+export async function loadCsv(filePath: string) {
   return new Promise<SongEntry[]>(resolve => {
+    const result: SongEntry[] = []
+    if (!fs.existsSync(filePath)) return resolve(result)
 
-    const result:SongEntry[] =[]
-    if ( !fs.existsSync(filePath) ) return resolve(result)
+    const stream = fs.createReadStream(filePath)
 
-    const stream =fs.createReadStream(filePath)
-    
     stream
-      .pipe(csvParser({ mapValues: ({ header,value }) => header === "date" ? +value : value }))
-      .on("data",data => result.push(data))
-      .on("end",() => resolve(result))
+      .pipe(csvParser({ mapValues: ({ header, value }) => (header === "date" ? +value : value) }))
+      .on("data", data => result.push(data))
+      .on("end", () => resolve(result))
   })
 }
 
-export async function saveCsv<T extends Record<string,unknown>>( filePath:string, input:T[] ) {
+export async function saveCsv<T extends Record<string, unknown>>(filePath: string, input: T[]) {
   const dirName = path.dirname(filePath)
-  if ( !fs.existsSync( dirName ))
-    fs.mkdirSync(dirName,{ recursive: true })
+  if (!fs.existsSync(dirName)) fs.mkdirSync(dirName, { recursive: true })
 
   return new Promise<void>((resolve, reject) => {
-    const fileContent =csvFormat(input)
-    fs.writeFile( filePath, fileContent, err => {
-      if ( err ) return reject(err)
+    const fileContent = csvFormat(input)
+    fs.writeFile(filePath, fileContent, err => {
+      if (err) return reject(err)
       resolve()
     })
   })
