@@ -26,27 +26,17 @@ yarn build
 ```
 
 - fill out necessary parameters in .env file
-- _optionally_ create a empty gist on github, clone it in the project directory and rename it to download
-- run
+- _optionally_ create a empty gist on github and add it to .env acorgingly
+- change file permissions with
 
 ```
-node dist/main.js
+chmod +x ./dist/index.js
 ```
 
-- add --limit to download more than 100 latest messages from discord
-- add --autoclean to remove duplicated videos from yt playlist
-- add --offline to just fetch the data, without uploading anything to youtube
-- add --gist to send finished csv to github gist
-
-- _optionally_ run
-
+and finally run with
 ```
-node dist/stats.js
+./dist/index.js
 ```
-
-to create svg statistics
-
-- add --gist to upload svg images to github gist
 
 ## Things to note
 
