@@ -3,7 +3,7 @@ name: Build and Release
 on:
   push:
     branches:
-      - main # Change this to the branch you want to trigger the Action on
+      - main  # Change this to the branch you want to trigger the action on
 
 jobs:
   build_and_release:
@@ -19,7 +19,7 @@ jobs:
           node-version: 18
 
       - name: Install dependencies
-        run: npm install --only=dev
+        run: npm install
 
       - name: Build project
         run: npm run build
@@ -41,3 +41,11 @@ jobs:
           body: |
             Add release notes here
           commitish: ${{ github.ref }}
+
+      - name: Upload App
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./dist/index.js
+          asset_name: app.js
+          asset_content_type: application/javascript
