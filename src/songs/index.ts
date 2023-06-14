@@ -3,7 +3,7 @@ import path from "node:path"
 import { SongEntry, otherSongsStore, songsStore } from "src/lib/stores/songs"
 import { User, userStore } from "src/lib/stores/users"
 import { getBotId } from "../lib/discord"
-import { CSV_PATH } from "../lib/paths"
+import { CSV_PATH, GIST_PATH } from "../lib/paths"
 import { loadCsv, saveCsv } from "./csv"
 import { addToPlaylist, autoCleanPlaylist, getGoogleAuthToken, listPlaylistItems } from "./google"
 import { getNewSongs } from "./messages"
@@ -56,7 +56,7 @@ export async function syncSongs(messageLimit = 100, offline = false, autoclean =
     saveCsv(path.join(CSV_PATH, "download_other.csv"), otherSongsStore.allSongs),
     saveCsv(path.join(CSV_PATH, "users.csv"), userStore.users),
     saveCsv(
-      `./download/${songFile}`,
+      path.join(GIST_PATH, songFile),
       songsStore.allSongs
         .concat(otherSongsStore.allSongs)
         .map(song => {

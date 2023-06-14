@@ -1,5 +1,6 @@
 import "dotenv/config"
 import fs from "node:fs"
+import path from "node:path"
 import { GIST_PATH } from "../lib/paths"
 import { spawnProcess } from "./process"
 
@@ -14,7 +15,13 @@ function initializeRepo() {
 }
 
 export async function commitChanges() {
-  if (!fs.existsSync(GIST_PATH)) await initializeRepo()
+  if (!fs.existsSync(path.join(GIST_PATH, ".git"))) {
+    if (fs.readdirSync(GIST_PATH).length > 0) {
+      fs.rmSync(GIST_PATH, { force: true, recursive: true })
+      fs.mkdirSync(GIST_PATH)
+    }
+    await initializeRepo()
+  }
 
   const commands = [
     "cd " + GIST_PATH,

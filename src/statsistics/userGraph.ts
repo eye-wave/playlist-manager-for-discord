@@ -1,5 +1,7 @@
 import { arc, pie } from "d3-shape"
 import fs from "node:fs"
+import path from "node:path"
+import { GIST_PATH } from "src/lib/paths"
 import { avatarStore } from "../lib/stores/avatars"
 import { pallete1 as colors } from "./lib/colors"
 import { UserWithCount } from "./lib/songsByUser"
@@ -74,5 +76,5 @@ export async function createUserChart(input: UserWithCount[]) {
 
   await Promise.all(promiseArray)
 
-  fs.writeFile("download/pmstats-piechart.svg", svg.render(), err => err && console.log(err))
+  fs.writeFile(path.join(GIST_PATH, "pmstats-piechart.svg"), svg.render(), err => err && console.log(err))
 }

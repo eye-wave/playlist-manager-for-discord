@@ -34,6 +34,7 @@ chmod +x ./dist/index.js
 ```
 
 and finally run with
+
 ```
 ./dist/index.js
 ```
@@ -46,4 +47,4 @@ sometimes it reuploads vidos for no particular reason that's why --autoclean exi
 
 - [ ] make better cli
 - [ ] organise chaotic code
-- [ ] allow for more directories _(also servers and chats)_ than just ./download
+- [ ] allow for more directories _(also servers and chats)_

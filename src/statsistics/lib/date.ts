@@ -5,6 +5,7 @@ export const days = hours * 24
 export const months = days * 30.44
 
 export function getMinMaxDates(dates: number[]) {
+  if (dates.length < 1) return [0, 0]
   return [Math.min(...dates), Math.max(...dates)]
 }
 

@@ -1,3 +1,5 @@
+import path from "node:path"
+import { CSV_PATH } from "src/lib/paths"
 import { songsStore, type SongEntry } from "src/lib/stores/songs"
 import { userStore, type User } from "src/lib/stores/users"
 import { loadCsv } from "src/songs/csv"
@@ -7,9 +9,9 @@ import { createUserChart } from "./userGraph"
 
 export async function renderStatistics() {
   const [oldUsers, oldSongs, oldOtherSongs] = await Promise.all([
-    loadCsv("./download/users.csv") as unknown as User[],
-    loadCsv("./download/download.csv") as unknown as SongEntry[],
-    loadCsv("./download/download_other.csv") as unknown as SongEntry[],
+    loadCsv(path.join(CSV_PATH, "users.csv")) as unknown as User[],
+    loadCsv(path.join(CSV_PATH, "download.csv")) as unknown as SongEntry[],
+    loadCsv(path.join(CSV_PATH, "download_other.csv")) as unknown as SongEntry[],
   ])
 
   oldUsers.forEach(user => userStore.addFromCache(user))

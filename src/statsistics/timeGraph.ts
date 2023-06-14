@@ -1,6 +1,8 @@
 import { scaleLinear, scaleUtc } from "d3-scale"
 import { curveBumpX as curve, line } from "d3-shape"
 import fs from "node:fs"
+import path from "node:path"
+import { GIST_PATH } from "src/lib/paths"
 import { avatarStore } from "../lib/stores/avatars"
 import { SongsByUserAndTime } from "./lib/songsByUser"
 import { createNode, createSvgNode } from "./lib/svg"
@@ -152,8 +154,8 @@ export async function createTimeGraph(input: SongsByUserAndTime[]) {
     })
   }
 
-  fs.writeFile("download/pmstats-timegraph-animated.svg", svg.render(), err => err && console.log(err))
+  fs.writeFile(path.join(GIST_PATH, "pmstats-timegraph-animated.svg"), svg.render(), err => err && console.log(err))
   svgArray.forEach(({ content, fileName }) =>
-    fs.writeFile("download/pmstats-timegraph-user-" + fileName, content, err => err && console.log(err)),
+    fs.writeFile(path.join(GIST_PATH, `pmstats-timegraph-user-${fileName}`), content, err => err && console.log(err)),
   )
 }
