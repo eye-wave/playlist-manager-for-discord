@@ -1,0 +1,43 @@
+name: Build and Release
+
+on:
+  push:
+    branches:
+      - main # Change this to the branch you want to trigger the action on
+
+jobs:
+  build_and_release:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm install --only=dev
+
+      - name: Build project
+        run: npm run build
+
+      - name: Read package.json
+        id: package
+        run: echo "::set-output name=version::$(node -p "require('./package.json').version")"
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.package.outputs.version }}
+          release_name: ${{ steps.package.outputs.version }}
+          draft: false
+          prerelease: false
+          body: |
+            Add release notes here
+          commitish: ${{ github.ref }}

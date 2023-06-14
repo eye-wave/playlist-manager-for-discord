@@ -2,9 +2,8 @@
   "name": "playlist-manager",
   "version": "2.0.1",
   "description": "",
-  "main": "./dist/main.js",
   "scripts": {
-    "start": "node ./dist/index.js -g -s",
+    "start": "NODE_OPTIONS=--enable-source-maps node ./dist/index.js",
     "build": "NODE_ENV=production rollup -c",
     "dev": "rollup -wc",
     "eslint": "eslint . --fix",

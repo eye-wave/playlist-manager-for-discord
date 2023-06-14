@@ -1,14 +1,25 @@
+<div align="center">
+
 # Playlist manager for Discord
 
-<div align="center">
-  <h2>Sync your Discord chat with Youtube, and Github Gist</h2>
+![GitHub package.json version](https://img.shields.io/github/package-json/v/eye-wave/playlist-manager-for-discord?color=green&style=for-the-badge)
+![GitHub repo size](https://img.shields.io/github/repo-size/eye-wave/playlist-manager-for-discord?style=for-the-badge)
+![GitHub](https://img.shields.io/github/license/eye-wave/playlist-manager-for-discord?style=for-the-badge)
+
+![GitHub top language](https://img.shields.io/github/languages/top/eye-wave/playlist-manager-for-discord?style=for-the-badge)
+![node-current](https://img.shields.io/node/v/discord.js?style=for-the-badge)
+
+![GitHub package.json dependency version (subfolder of monorepo)](https://img.shields.io/github/package-json/dependency-version/eye-wave/playlist-manager-for-discord/discord.js?style=flat-square)
+![GitHub package.json dependency version (subfolder of monorepo)](https://img.shields.io/github/package-json/dependency-version/eye-wave/playlist-manager-for-discord/googleapis?style=flat-square)
+
+## Sync your shared songs from Discord with Youtube, and Github Gist
+
   <img src="https://cdn-icons-png.flaticon.com/512/5968/5968756.png" alt="Discord" height=48>
   <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="Youtube" height=48>
   <img src="https://cdn-icons-png.flaticon.com/512/2111/2111432.png" alt="Github" height=48>
-</div>
 
-<div align="center">
-  <p>Made with:</p>
+Made with
+
   <img src="https://www.typescriptlang.org/favicon-32x32.png" alt="typescript" height=32>
   <img src="https://rollupjs.org/favicon.png" alt="rollup.js" height=32>
   <img src="https://pnpm.io/img/favicon.png" alt="pnpm" height=32>
