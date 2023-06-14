@@ -3,7 +3,7 @@ name: Build and Release
 on:
   push:
     branches:
-      - main # Change this to the branch you want to trigger the action on
+      - main # Change this to the branch you want to trigger the Action on
 
 jobs:
   build_and_release:
